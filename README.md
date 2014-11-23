@@ -1,4 +1,5 @@
 ucdump
 ======
 
-Unicode character dump
+Unicode character dump for UTF-8 encoded files.
+
