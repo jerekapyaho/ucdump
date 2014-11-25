@@ -32,8 +32,7 @@
     
 (defn -main
   [& args]
-  (cond
-    (not= (count args) 0) 
-      (let [text (slurp (nth args 0) :encoding "UTF-8")]
-        (doseq [line (character-lines text)] (println line)))))
+  (when (not= (count args) 0) 
+    (let [text (slurp (nth args 0) :encoding "UTF-8")]
+      (doseq [line (character-lines text)] (println line)))))
     
