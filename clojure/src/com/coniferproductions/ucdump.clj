@@ -33,6 +33,6 @@
 (defn -main
   [& args]
   (when (not= (count args) 0) 
-    (let [text (slurp (nth args 0) :encoding "UTF-8")]
-      (doseq [line (character-lines text)] (println line)))))
+    (let [characters (slurp (nth args 0) :encoding "UTF-8")]
+      (doseq [line (character-lines characters)] (println line)))))
     
