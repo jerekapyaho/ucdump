@@ -1,4 +1,4 @@
-﻿open System
+﻿open System.IO
 open System.Unicode
 
 type OffsetCharacterPair = { Offset: int; Character: char }
@@ -42,8 +42,11 @@ let characterLines s =
 
 [<EntryPoint>]
 let main argv =
-    let s = "I \u2764 F#"
-    let result = characterLines s
-    result |> Seq.iter (fun line -> printfn "%s" line)
+    match argv with
+    | [|filename|] -> 
+        let fileContents = File.ReadAllText(filename)
+        let result = characterLines fileContents
+        result |> Seq.iter (fun line -> printfn "%s" line)
+    | _ -> printf "Need a filename"
     
     0 // return an integer exit code
