@@ -1,6 +1,8 @@
 ﻿open System
 open System.Unicode
 
+type OffsetCharacterPair = { Offset: int; Character: char }
+
 let codepoint (c: char) = int c
 
 let characterName c = 
@@ -25,9 +27,23 @@ let octetCounts s =
 
 let explode (s: string) = [for c in s -> c]
 
+let zipMap f a b = Seq.zip a b |> Seq.map (fun (x,y) -> f x y)
+
+let makePair offset ch = { Offset = offset; Character = ch }
+
+let characterLine pair = 
+    sprintf "%08d: U+%06X %s" pair.Offset (codepoint pair.Character) (characterName pair.Character)
+
+let characterLines s =
+    let counts = octetCounts (explode s)
+    let offsets = List.scan (+) 0 counts
+    let pairs = zipMap makePair offsets (Seq.toList s)
+    List.map characterLine (Seq.toList pairs)
+
 [<EntryPoint>]
 let main argv =
     let s = "I \u2764 F#"
-    explode s |> Seq.iter (fun ch -> printfn "%c = %s (%i octets)" ch (characterName ch) (octetCount (codepoint ch)))
+    let result = characterLines s
+    result |> Seq.iter (fun line -> printfn "%s" line)
     
     0 // return an integer exit code
