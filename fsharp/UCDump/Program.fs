@@ -6,12 +6,8 @@ type OffsetCharacterPair = { Offset: int; Character: char }
 let codepoint (c: char) = int c
 
 let characterName c = 
-    let cp = codepoint c
-    let info = UnicodeInfo.GetCharInfo cp
+    let info = UnicodeInfo.GetCharInfo (codepoint c)
     info.Name
-
-let characterNames s = 
-    List.map characterName
 
 let octetCount cp =
     match cp with
@@ -21,13 +17,11 @@ let octetCount cp =
     | c when c >= 0x010000 && c <= 0x10ffff -> 4
     | _ -> 0
 
-let octetCounts s =
-    let codepoints = List.map codepoint s
-    List.map octetCount codepoints
+let octetCounts s = List.map octetCount (List.map codepoint s)
 
 let explode (s: string) = [for c in s -> c]
 
-let zipMap f a b = Seq.zip a b |> Seq.map (fun (x,y) -> f x y)
+let zipMap f a b = Seq.zip a b |> Seq.map (fun (x, y) -> f x y)
 
 let makePair offset ch = { Offset = offset; Character = ch }
 
