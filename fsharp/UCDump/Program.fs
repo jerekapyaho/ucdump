@@ -1,12 +1,6 @@
 ﻿open System.IO
 open System.Unicode
 
-/// Record type to hold a character and its offset in the source
-type OffsetCharacterPair = { Offset: int; Character: char }
-
-/// Makes an OffsetCharacterPair record
-let makePair offset ch = { Offset = offset; Character = ch }
-
 /// <summary>Gets the Unicode codepoint of the character <c>c</c>.</summary>
 /// <param name="c">The character.</param>
 /// <returns>The codepoint of the character.</returns>
@@ -52,15 +46,18 @@ let zipMap f a b = Seq.zip a b |> Seq.map (fun (x, y) -> f x y)
 /// <param name="pair">The <c>OffsetCharacterPair</code> record with the data.</param>
 /// <returns>A string describing the character.</returns>
 let characterLine pair = 
-    sprintf "%08d: U+%06X %s" pair.Offset (codepoint pair.Character) (characterName pair.Character)
+    let offset, ch = pair
+    sprintf "%08d: U+%06X %s" offset (codepoint ch) (characterName ch)
+
+let pair offset ch = (offset, ch)
 
 /// <summary>Returns a list of lines describing each character in the string <c>s</c>.</summary>
 /// <param name="s">The string.</param>
 /// <returns>A list of line descriptions.</returns>
 let characterLines s =
     let counts = octetCounts (explode s)
-    let offsets = List.scan (+) 0 counts
-    let pairs = zipMap makePair offsets (Seq.toList s)
+    let offsets = List.scan (+) 0 counts  // make a list of cumulative offsets
+    let pairs = zipMap pair offsets (Seq.toList s)
     List.map characterLine (Seq.toList pairs)
 
 [<EntryPoint>]
