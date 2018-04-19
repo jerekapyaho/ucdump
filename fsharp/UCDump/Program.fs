@@ -43,7 +43,7 @@ let explode (s: string) = [for c in s -> c]
 let zipMap f a b = Seq.zip a b |> Seq.map (fun (x, y) -> f x y)
 
 /// <summary>Formats a string with the offset, Unicode code point and the character name.</summary>
-/// <param name="pair">The <c>OffsetCharacterPair</code> record with the data.</param>
+/// <param name="pair">The tuple with the offset and the character.</param>
 /// <returns>A string describing the character.</returns>
 let characterLine pair = 
     let offset, ch = pair
