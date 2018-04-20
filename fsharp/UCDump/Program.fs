@@ -49,9 +49,9 @@ let characterLine pair =
     let offset, ch = pair
     sprintf "%08d: U+%06X %s" offset (codepoint ch) (characterName ch)
 
-let pair offset ch = (offset, ch)
+let pair offset ch = offset, ch
 
-/// <summary>Returns a list of lines describing each character in the string <c>s</c>.</summary>
+/// <summary>Returns a list of line descriptions about each character in the string <c>s</c>.</summary>
 /// <param name="s">The string.</param>
 /// <returns>A list of line descriptions.</returns>
 let characterLines s =
