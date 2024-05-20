@@ -9,7 +9,7 @@ fn main() {
     let contents = fs::read_to_string(file_path)
         .expect("Should have been able to read the file");
     for (position, character) in contents.char_indices() {
-        println!("{:08X}: U+{:06X} {}",
+        println!("{:08}: U+{:06X} {}",
             position,
             character as u32,
             charname::get_name(character as u32));
