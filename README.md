@@ -2,6 +2,10 @@
 
 Unicode character dump for UTF-8 encoded files.
 
+## Rust version
+
+A Rust version of the original utility.
+
 ## Python version
 
 The original utility, described in [Unicode character dump in Python](https://coniferproductions.com/posts/2012/12/17/unicode-character-dump-in-python/).

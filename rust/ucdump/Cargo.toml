@@ -1,0 +1,7 @@
+[package]
+name = "ucdump"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+charname = "0.2.15"
